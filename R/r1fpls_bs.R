@@ -1,4 +1,4 @@
-#' Penalized rank-one functional PLS using fda-package basis
+#' Penalized rank-one functional PLS using fda-package basis (B-spline basis as default)
 #'
 #' @param X a number of observations times nodes matrix.
 #' @param Y a number of observations times reponses matrix.
@@ -15,7 +15,7 @@
 #' \code{FALSE}. Inspired by package \code{pls}.
 #' @param ... further arguments.  Currently not used
 #'
-#' @return an fpls-fda model.
+#' @return an r1fpls_bs model.
 #' @export
 #'
 #' @examples
@@ -42,22 +42,22 @@
 #'
 #'
 #'
-#' res_ps <-  fpls_fda(X = X, Y = Y, argvals = argvals,
+#' res_ps <-  r1fpls_bs(X = X, Y = Y, argvals = argvals,
 #'                 ncomp = 3, center = TRUE, penalty = 100,
 #'                 basisobj = bs_basis, stripped = FALSE)
 #'
 #' predict(res_ps, newdata = X)
-fpls_fda <- function(X,
-                     Y,
-                     argvals,
-                     ncomp = 3,
-                     center = TRUE,
-                     basisobj,
-                     penalty = 0,
-                     tol = .Machine$double.eps^0.5,
-                     verbose = TRUE,
-                     stripped = FALSE,
-                     ...
+r1fpls_bs <- function(X,
+                      Y,
+                      argvals,
+                      ncomp = 3,
+                      center = TRUE,
+                      basisobj,
+                      penalty = 0,
+                      tol = .Machine$double.eps^0.5,
+                      verbose = TRUE,
+                      stripped = FALSE,
+                      ...
 ) {
 
   tictoc::tic("FPLS-FDA")
@@ -268,7 +268,7 @@ fpls_fda <- function(X,
                 Y_mean = Y_mean,
                 elapsed = tictoc::toc(quiet = !verbose) )
 
-    class(ret) <- "fpls_fda"
+    class(ret) <- "r1fpls_bs"
 
   }else {         # full computations
 
@@ -288,7 +288,7 @@ fpls_fda <- function(X,
                 elapsed = tictoc::toc(quiet = !verbose)
     )
 
-    class(ret) <- "fpls_fda"
+    class(ret) <- "r1fpls_bs"
 
   }
 

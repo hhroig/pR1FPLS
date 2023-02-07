@@ -18,13 +18,13 @@
 #' Y <- L[["Y"]]
 #' FEM_basis <- L[["basisobj"]]
 #'
-#' res_fpls_fem <- fpls_fem(X, Y, ncomp = 3, center = TRUE,
+#' res_fpls_fem <- r1fpls_fem(X, Y, ncomp = 3, center = TRUE,
 #'                              basisobj = FEM_basis, penalty = 10,
 #'                              verbose = FALSE, stripped = FALSE )
 #'
 #' Y_pred <- predict(res_fpls_fem, X)
 #' Y_hat <- fitted.values(res_fpls_fem)
-predict.fpls_fem <-  function(object, newdata, ...){
+predict.r1fpls_fem <-  function(object, newdata, ...){
 
   Xc <- scale(newdata, center = object$X_mean, scale = FALSE)
 
@@ -67,12 +67,12 @@ predict.fpls_fem <-  function(object, newdata, ...){
 #'
 #'
 #'
-#' res_ps <-  fpls_fda(X = X, Y = Y, argvals = argvals,
+#' res_ps <-  r1fpls_bs(X = X, Y = Y, argvals = argvals,
 #'                 ncomp = 3, center = TRUE, penalty = 100,
 #'                 basisobj = bs_basis, stripped = FALSE)
 #'
 #' predict(res_ps, newdata = X)
-predict.fpls_fda <-  function(object, newdata, ...){
+predict.r1fpls_bs <-  function(object, newdata, ...){
 
   Xc <- scale(newdata, center = object$X_mean, scale = FALSE)
 
@@ -128,12 +128,12 @@ predict.fpls_fda <-  function(object, newdata, ...){
 #'
 #'
 #'
-#' res_ps <-  fpls_bexp(X = X, Y = Y, argvals = argvals,
+#' res_ps <-  fpls_bs(X = X, Y = Y, argvals = argvals,
 #'                 ncomp = 3, penalty = 100,
 #'                 basisobj = bs_basis, stripped = FALSE)
 #'
 #' predict(res_ps, newdata = X)
-predict.fpls_bexp <-  function(object, newdata, ...){
+predict.fpls_bs <-  function(object, newdata, ...){
 
   # Represent newdata using a B-spline basis:
   bsplineXtest <- fda::Data2fd(argvals = object$argvals,

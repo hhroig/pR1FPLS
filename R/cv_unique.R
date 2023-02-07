@@ -113,14 +113,6 @@ cv_unique <- function(X,
     for (row_lambda in 1:length(penalty_grid)) {
       for (i in 1:num_folds) {
 
-        # i <- row_lambda <- NULL
-        # MSE_lambda_fold <- foreach::foreach (i = 1:num_folds,
-        #                                      .packages = c("r1fplsTOY"),
-        #                                      .combine = "cbind") %:%
-        #   foreach::foreach(row_lambda = 1:length(penalty_grid),
-        #                    .packages = c("r1fplsTOY"),
-        #                    .combine = 'c' ) %dopar%
-        #   {
 
         # build train
         Y_fold_train <- Y[-folds[[i]], , drop = F]
@@ -154,8 +146,6 @@ cv_unique <- function(X,
                                                                            newdata = X_fold_test))^2)
       }
     }
-
-    # } # nested loop
 
 
     # Averaged MSE_fold:

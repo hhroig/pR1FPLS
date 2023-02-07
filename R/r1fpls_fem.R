@@ -14,7 +14,7 @@
 #' \code{FALSE}. Inspired by package \code{pls}.
 #' @param ... further arguments.  Currently not used
 #'
-#' @return an fpls_fem model.
+#' @return an r1fpls_fem model.
 #' @export
 #'
 #' @examples
@@ -28,7 +28,7 @@
 #' Y <- L[["Y"]]
 #' FEM_basis <- L[["basisobj"]]
 #'
-#' results_fpls_fem <- fpls_fem(X, Y, ncomp = 3, center = TRUE,
+#' results_fpls_fem <- r1fpls_fem(X, Y, ncomp = 3, center = TRUE,
 #'                              basisobj = FEM_basis, penalty = 10,
 #'                              verbose = TRUE )
 #'
@@ -38,16 +38,16 @@
 #' true_coeff <- L[["coefficient_function"]]
 #' image(matrix(results_fpls_fem[["coefficient_function"]], 10, 10),
 #'       main = "Estimated coefficient function")
-fpls_fem <- function(X,
-                     Y,
-                     ncomp = 3,
-                     center = TRUE,
-                     basisobj,
-                     penalty = 0,
-                     tol = .Machine$double.eps^0.5,
-                     verbose = TRUE,
-                     stripped = FALSE,
-                     ...
+r1fpls_fem <- function(X,
+                       Y,
+                       ncomp = 3,
+                       center = TRUE,
+                       basisobj,
+                       penalty = 0,
+                       tol = .Machine$double.eps^0.5,
+                       verbose = TRUE,
+                       stripped = FALSE,
+                       ...
 ) {
 
   tictoc::tic("FPLS-FEM")
@@ -258,7 +258,7 @@ fpls_fem <- function(X,
                 Y_mean = Y_mean,
                 elapsed = tictoc::toc(quiet = !verbose) )
 
-    class(ret) <- "fpls_fem"
+    class(ret) <- "r1fpls_fem"
 
   }else {         # full computations
 
@@ -282,7 +282,7 @@ fpls_fem <- function(X,
                 elapsed = tictoc::toc(quiet = !verbose)
     )
 
-    class(ret) <- "fpls_fem"
+    class(ret) <- "r1fpls_fem"
 
   }
 

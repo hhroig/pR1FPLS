@@ -1,5 +1,5 @@
 #' Penalized functional PLS based on the (1D) basis representation of the data
-#' Method by Aguilera et al. 2016.
+#' Method by Aguilera et al. 2016. Default are B-spline basis.
 #'
 #' @param X a number of observations times nodes matrix.
 #' @param Y a number of observations times reponses matrix.
@@ -16,7 +16,7 @@
 #' \code{FALSE}. Inspired by package \code{pls}.
 #' @param ... further arguments.  Currently not used
 #'
-#' @return an fpls-bexp model.
+#' @return an fpls_bs model.
 #' @export
 #'
 #' @examples
@@ -43,22 +43,22 @@
 #'
 #'
 #'
-#' res_ps <-  fpls_bexp(X = X, Y = Y, argvals = argvals,
+#' res_ps <-  fpls_bs(X = X, Y = Y, argvals = argvals,
 #'                 ncomp = 3, center = TRUE, penalty = 100,
 #'                 basisobj = bs_basis, stripped = FALSE)
 #'
 #' predict(res_ps, newdata = X)
-fpls_bexp <- function(X,
-                      Y,
-                      argvals,
-                      ncomp = 3,
-                      center = TRUE,
-                      basisobj,
-                      penalty = 0,
-                      tol = .Machine$double.eps^0.5,
-                      verbose = TRUE,
-                      stripped = FALSE,
-                      ...
+fpls_bs <- function(X,
+                    Y,
+                    argvals,
+                    ncomp = 3,
+                    center = TRUE,
+                    basisobj,
+                    penalty = 0,
+                    tol = .Machine$double.eps^0.5,
+                    verbose = TRUE,
+                    stripped = FALSE,
+                    ...
 ) {
 
   tictoc::tic("FPLS-FDA")
@@ -148,7 +148,7 @@ fpls_bexp <- function(X,
                 ncomp = ncomp,
                 elapsed = tictoc::toc(quiet = !verbose) )
 
-    class(ret) <- "fpls_bexp"
+    class(ret) <- "fpls_bs"
 
   }else {         # full computations
 
@@ -189,7 +189,7 @@ fpls_bexp <- function(X,
                 elapsed = tictoc::toc(quiet = !verbose)
     )
 
-    class(ret) <- "fpls_bexp"
+    class(ret) <- "fpls_bs"
 
   }
 

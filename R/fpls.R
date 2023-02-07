@@ -120,9 +120,9 @@ fpls <- function(X,
   method <- match.arg(method, c("r1fpls_fem", "r1fpls_bs", "fpls_bs", "fpls_tps"))
 
   fitFunc <- switch(method,
-                    r1fpls_fem = fpls_fem,
-                    r1fpls_bs = fpls_fda,
-                    fpls_bs = fpls_bexp,
+                    r1fpls_fem = r1fpls_fem,
+                    r1fpls_bs = r1fpls_bs,
+                    fpls_bs = fpls_bs,
                     fpls_tps = fpls_tps
   )
 
