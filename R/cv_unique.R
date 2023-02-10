@@ -164,6 +164,10 @@ cv_unique <- function(X,
 
   } # loop in ncomp: number of components
 
+  names(CVEs_ncomp) <- paste0("ncomp_", 1:ncomp)
+  names(best_penalties) <- paste0("ncomp_", 1:ncomp)
+  colnames(MSE_ncomp_fold) <- paste0("fold_", 1:num_folds)
+  rownames(MSE_ncomp_fold) <- paste0("ncomp_", 1:ncomp)
 
   if (stripped) {
     ret <- list(

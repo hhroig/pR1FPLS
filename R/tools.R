@@ -59,3 +59,31 @@ getVolume <- function(df) {
              split.data.frame(res$tri,seq_along(res$areas)),
              res$areas))
 }
+
+
+# Integrated mean square error for the evaluation of the estimated beta (2D domain)
+#
+imse_beta_2d <- function(beta_hat,
+                      beta_true,
+                      R0,
+                      domain_area){
+
+  imse <- as.numeric((t(beta_hat)%*%R0%*%beta_hat -
+                        2*t(beta_hat)%*%R0%*%beta_true +
+                        t(beta_true)%*%R0%*%beta_true)/domain_area)
+
+  return(imse)
+
+}
+
+
+# Integrated mean square error for the evaluation of the estimated beta (1D domain)
+#
+imse_beta_1d <- function(argvals, beta_true, beta_hat) {
+
+  imse <- num_int_1d(argvals = argvals,
+                     f_obs = (beta_true - beta_hat)^2 ) / abs(diff(range(argvals)))
+
+  return(imse)
+
+}
