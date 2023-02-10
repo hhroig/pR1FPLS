@@ -64,9 +64,9 @@ getVolume <- function(df) {
 # Integrated mean square error for the evaluation of the estimated beta (2D domain)
 #
 imse_beta_2d <- function(beta_hat,
-                      beta_true,
-                      R0,
-                      domain_area){
+                         beta_true,
+                         R0,
+                         domain_area){
 
   imse <- as.numeric((t(beta_hat)%*%R0%*%beta_hat -
                         2*t(beta_hat)%*%R0%*%beta_true +
