@@ -53,7 +53,7 @@ num_int_1d <- function(argvals, f_obs) {
 
 getVolume <- function(df) {
   #find triangular tesselation of (x,y) grid
-  res  <-  geometry::delaunayn(as.matrix(df[ , -3]), full=TRUE, options="Qz")
+  res  <-  geometry::delaunayn(as.matrix(df[ , -3]), options="Qz", output.options=TRUE)
   #calulates sum of truncated prism volumes
   sum(mapply(function(triPoints,A) A/3*sum(df[triPoints,"z"]),
              split.data.frame(res$tri,seq_along(res$areas)),
