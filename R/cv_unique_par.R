@@ -113,10 +113,10 @@ cv_unique_par <- function(X,
     i <- row_lambda <- NULL
 
     MSE_lambda_fold <- foreach::foreach (i = 1:num_folds,
-                                         .packages = c("r1fplsTOY"),
+                                         .packages = c("pR1FPLS"),
                                          .combine = "cbind") %:%
       foreach::foreach(row_lambda = 1:length(penalty_grid),
-                       .packages = c("r1fplsTOY"),
+                       .packages = c("pR1FPLS"),
                        .combine = 'c' ) %dopar%
       {
 
