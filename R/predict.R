@@ -135,9 +135,11 @@ predict.r1fpls_bs <-  function(object, newdata, ...){
 #' predict(res_ps, newdata = X)
 predict.fpls_bs <-  function(object, newdata, ...){
 
+  newXc <- scale(newdata, center = object$X_mean, scale = FALSE)
+
   # Represent newdata using a B-spline basis:
   bsplineXtest <- fda::Data2fd(argvals = object$argvals,
-                               y = Matrix::t(newdata),
+                               y = Matrix::t(newXc),
                                basisobj = object$basisobj  )
 
   # Coeff. matrix of size obs. times num. basis:
@@ -146,7 +148,9 @@ predict.fpls_bs <-  function(object, newdata, ...){
   # Input for mv-pls:
   new_data_pls <- A_test %*% object$R0 %*% object$inv_t_L
 
-  pred <- as.matrix(stats::predict(object$mvpls_model, new_data_pls)[ , , object$ncomp])
+  pred <- as.matrix(
+    stats::predict(object$mvpls_model, new_data_pls)[ , , object$ncomp]
+  ) + object$Y_mean
 
   return(pred)
 

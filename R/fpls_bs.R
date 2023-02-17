@@ -122,7 +122,7 @@ fpls_bs <- function(X,
 
   # Represent X using a B-spline basis:
   bsplineX <- fda::Data2fd(argvals = argvals,
-                           y = Matrix::t(X),
+                           y = Matrix::t(Xc),
                            basisobj = basisobj  )
 
   # Coeff. matrix of size obs. times num. basis:
@@ -131,7 +131,7 @@ fpls_bs <- function(X,
   data_pls <- A %*% R0 %*% inv_t_L
 
   # PLS model:
-  mvpls_model <- pls::plsr(Y ~ data_pls,
+  mvpls_model <- pls::plsr(Yc ~ data_pls,
                            ncomp =  ncomp,
                            model = "oscorespls",
                            center = center )
@@ -144,6 +144,8 @@ fpls_bs <- function(X,
                 basisobj = basisobj,
                 R0 = R0,
                 inv_t_L = inv_t_L,
+                X_mean = X_mean,
+                Y_mean = Y_mean,
                 mvpls_model = mvpls_model,
                 ncomp = ncomp,
                 elapsed = tictoc::toc(quiet = !verbose) )
@@ -184,7 +186,7 @@ fpls_bs <- function(X,
                 W = W,
                 X_mean = X_mean,
                 Y_mean = Y_mean,
-                fitted.values = as.matrix( mvpls_model$fitted.values[ , , ncomp] ),
+                fitted.values = as.matrix( mvpls_model$fitted.values[ , , ncomp] ) + Y_mean,
                 coefficient_function = as.matrix(Beta_hat),
                 elapsed = tictoc::toc(quiet = !verbose)
     )
