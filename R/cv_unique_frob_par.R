@@ -113,10 +113,10 @@ cv_unique_frob_par <- function(X,
     i <- row_lambda <- NULL
 
     MSE_lambda_fold <- foreach::foreach (i = 1:num_folds,
-                                         .packages = c("pR1FPLS"),
+                                         .packages = c("pR1FPLS", "Matrix"),
                                          .combine = "cbind") %:%
       foreach::foreach(row_lambda = 1:length(penalty_grid),
-                       .packages = c("pR1FPLS"),
+                       .packages = c("pR1FPLS", "Matrix"),
                        .combine = 'c' ) %dopar%
       {
 
@@ -166,7 +166,7 @@ cv_unique_frob_par <- function(X,
           if(method == "r1fpls_fem"){
 
             # compute mass matrix:
-            R0 <- mass_mat_fun(FEMbasis = basisobj)
+            R0 <- pR1FPLS:::mass_mat_fun(FEMbasis = basisobj)
 
             tt  <- Xc_old %*% R0 %*% w # as.matrix(Xc_old %*% R0 %*% w)
 
