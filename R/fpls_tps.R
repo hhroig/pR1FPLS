@@ -142,8 +142,9 @@ fpls_tps <- function(X,
   # PLS model:
   mvpls_model <- pls::plsr(Yc ~ data_pls,
                            ncomp =  ncomp,
-                           model = "oscorespls",
-                           center = center )
+                           method = "oscorespls",
+                           center = FALSE,
+                           scale = FALSE )
 
 
   # Rertuns:
