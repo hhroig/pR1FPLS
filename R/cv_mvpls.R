@@ -103,8 +103,9 @@ cv_mvpls <- function(X,
 
   final_model <- pls::plsr(Y ~ X,
                            ncomp =  ncomp,
-                           model = "oscorespls",
-                           center = center )
+                           method = "oscorespls",
+                           center = TRUE,
+                           scale = FALSE )
 
   ret <- list(CVEs_ncomp = CVEs_ncomp,
               MSE_ncomp_fold = MSE_ncomp_fold,
