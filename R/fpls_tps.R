@@ -135,7 +135,7 @@ fpls_tps <- function(X,
   # Matrix L with penalty:
   LLprim <- R0 + penalty*P
   L <- expm::sqrtm(LLprim)
-  inv_t_L <- Matrix::solve(L)
+  inv_t_L <- Matrix::t(Matrix::solve(L))
 
   data_pls <- A %*% R0 %*% inv_t_L
 
@@ -175,13 +175,17 @@ fpls_tps <- function(X,
 
     W <- as.matrix( mvpls_model[["loading.weights"]] )
 
-    # B <- as.matrix(mvpls_model[["coefficients"]] )
+    B <- as.matrix(mvpls_model[["coefficients"]] )
+
+
 
     # Coeffs. of the basis representation of Beta(p):
-    beta_coeff_h <- inv_t_L %*% W %*% Matrix::t(D)
+    W_star <- W %*% Matrix::solve( Matrix::t(C) %*% W )
+    beta_coeff_h <- inv_t_L %*% W_star %*% Matrix::t(D)
 
     # Beta_hat observed in p_1, ..., p_m
     Beta_hat <- Psi %*% beta_coeff_h
+    # Beta_hat <- Psi %*% inv_t_L %*% B
 
     ret <- list(nodes = nodes,
                 nbasis = nbasis,

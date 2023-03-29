@@ -118,7 +118,7 @@ fpls_bs <- function(X,
   # Matrix L with penalty:
   LLprim <- R0 + penalty*P
   L <- expm::sqrtm(LLprim)
-  inv_t_L <- Matrix::solve(L)
+  inv_t_L <- Matrix::t(Matrix::solve(L))
 
   # Represent X using a B-spline basis:
   bsplineX <- fda::Data2fd(argvals = argvals,
@@ -166,13 +166,22 @@ fpls_bs <- function(X,
 
     W <- as.matrix( mvpls_model[["loading.weights"]] )
 
-    # B <- as.matrix(mvpls_model[["coefficients"]] )
+    B <- as.matrix(mvpls_model[["coefficients"]] )
 
-    # Coeffs. of the basis representation of Beta(p):
-    beta_coeff_h <- inv_t_L %*% W %*% Matrix::t(D)
+
+    # # Coeffs. of the basis representation of Beta(p):
+    W_star <- W %*% Matrix::solve( Matrix::t(C) %*% W )
+    beta_coeff_h <- inv_t_L %*% W_star %*% Matrix::t(D)
+
+    # # This one returns the same output:
+    # lm1 <- stats::lm(Yc ~ TT - 1)
+    # gamma_coeff_h <- coefficients(lm1)
+    # beta_coeff_h <- inv_t_L %*% W_star %*% as.vector(gamma_coeff_h)
+
 
     # Beta_hat observed in p_1, ..., p_m
     Beta_hat <- Psi %*% beta_coeff_h
+    # Beta_hat <- Psi %*% inv_t_L %*% B
 
     ret <- list(argvals = argvals,
                 basisobj = basisobj,
